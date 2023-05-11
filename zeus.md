@@ -213,19 +213,58 @@ for (var i = 0; i < participants.length; i++)
 
 <h1 class="lll-title">Incorrect Contracts - Transaction State Dependence</h1>
 
+- Contract writers can utilize transaction state variables, such as `tx.origin` and `tx.gasprice`, for managing control flow within a smart contract
+- `tx.gasprice` is fixed and is published upfront - cannot be exploited :smile:
+- `tx.origin` allows a contract to check the address that originally initiated the call chain
+
+---
+
+<h1 class="lll-title">Incorrect Contracts - Transaction State Dependence</h1>
+
 ```js
+contract UserWallet {
+    function transfer(address dest, uint amount) {
+        if (tx.origin != owner)
+            throw;
+        dest.send(amount);
+    }
+}
+```
 
-checkedSend = true
-
-//...
-if (gameHasEnded && !prizePaidOut) {
-    checkedSend = winner.send(1000); // Send a prize to the winner
-    assert(checkSend == true)
-    prizePaidOut = True;
+```js
+contract AttackWallet {
+    function() {
+        UserWallet w = UserWallet(userWalletAddr);
+        w.transfer(thiefStorageAddr, msg.sender.balance);
+    }
 }
 ```
 
 ---
+
+<h1 class="lll-title">Incorrect Contracts - Transaction State Dependence</h1>
+
+```js
+contract UserWallet {
+    function transfer(address dest, uint amount) {
+        if (msg.sender != owner) // FIXED!
+            throw;
+        dest.send(amount);
+    }
+}
+```
+
+```js
+contract AttackWallet {
+    function() {
+        UserWallet w = UserWallet(userWalletAddr);
+        w.transfer(thiefStorageAddr, msg.sender.balance);
+    }
+}
+```
+
+---
+
 # Unfair Contracts - Incorrect Logic
 ```js
  while (balance > persons[payoutCursor_Id_].deposit / 100 * 115) {
@@ -235,5 +274,6 @@ if (gameHasEnded && !prizePaidOut) {
     payoutCursor_Id_ ++;
 }
 ```
-  - Two similar variables, `payoutCursor_Id` and `payoutCursor_Id_`.
-  - The deposits of all investors go to the 0th participant, possibly the person who created the contract.
+
+  - Two similar variables, `payoutCursor_Id` and `payoutCursor_Id_`
+  - The deposits of all investors go to the 0th participant, possibly the person who created the contract
