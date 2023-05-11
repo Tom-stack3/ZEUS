@@ -265,6 +265,17 @@ contract AttackWallet {
 
 ---
 
+# Unfair Contracts - Absence of Logic
+
+- Access to sensitive resources and APIs must be guarded, for instance:
+
+- `selfdestruct`:
+    - Kill a contract and send its balance to a given address
+    - Should be preceded by a check that only the owner of the contract is allowed to kill it
+    - Several contracts did not have this check
+
+---
+
 # Unfair Contracts - Incorrect Logic
 ```js
  while (balance > persons[payoutCursor_Id_].deposit / 100 * 115) {
@@ -279,12 +290,45 @@ contract AttackWallet {
   - The deposits of all investors go to the 0th participant, possibly the person who created the contract
 
 ---
+
+# Unfair Contracts - Logically Correct but Unfair
+
+##### Auction House Contract
+
+<div class="columns">
+<div>
+
+```js
+function placeBid(uint auctionId){
+    Auction a = auctions[auctionId];
+    if (a.currentBid >= msg.value)
+        throw;
+    uint bidIdx = a.bids.length++;
+    Bid b = a.bids[bidIdx];
+    b.bidder = msg.sender;
+    b.amount = msg.value;
+    // ...
+    BidPlaced(auctionId, b.bidder, b.amount);
+    return true;
+}
+```
+</div>
+<div>
+
+- The contract does not disclose whether it is "with reserve" or not
+- The seller can participate in the auction and artificially bid up the price
+- The seller can withdraw the property from the auction before it is sold
+</div>
+
+---
+
 # ZEUS
  - Takes as input a smart contract and a policy against which the smart contract must be verified
  - Performs static analysis atop the smart contract code 
  - Inserts the policy predicates as asserts
  - Converts the smart contract embedded with policy assertions to LLVM bitcode
  - Invokes its verifier to determine assertion violations
+
 ---
 # Formalizing Solidity Semantics
 - Abstract language that captures relevant constructs of Solidity programs
@@ -293,5 +337,6 @@ contract AttackWallet {
 definitions
 
 ---
+
 # An abstract language modeling Solidity
 ![An abstract language modeling Solidity](./pictures/abstract_language.png)
