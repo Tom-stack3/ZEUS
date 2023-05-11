@@ -319,3 +319,24 @@ function placeBid(uint auctionId){
 - The seller can participate in the auction and artificially bid up the price
 - The seller can withdraw the property from the auction before it is sold
 </div>
+
+---
+
+# ZEUS
+ - Takes as input a smart contract and a policy against which the smart contract must be verified
+ - Performs static analysis atop the smart contract code 
+ - Inserts the policy predicates as asserts
+ - Converts the smart contract embedded with policy assertions to LLVM bitcode
+ - Invokes its verifier to determine assertion violations
+
+---
+# Formalizing Solidity Semantics
+- Abstract language that captures relevant constructs of Solidity programs
+- A program consists of a sequence of contract declarations.
+- Each contract is abstractly viewed as a sequence of one or more method
+definitions
+
+---
+
+# An abstract language modeling Solidity
+![An abstract language modeling Solidity](./pictures/abstract_language.png)
