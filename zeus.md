@@ -339,4 +339,16 @@ definitions
 ---
 
 # An abstract language modeling Solidity
-![An abstract language modeling Solidity](./pictures/abstract_language.png)
+
+$$
+\begin{array}{l}
+P\ ::=\ C^{*}\\
+C::=\mathbf{contract} \ @Id\{\ \mathbf{global} \ v\ :\ T;\ \mathbf{function} @Id( l\ :\ T) \ \{S\})^{*}\}\\
+S::=( l\ :\ T@Id)^{*} \ \mid l:=e\mid S;S\\
+\mid \mathbf{if} \ e\ \mathbf{then} \ S\ else\ S\\
+\mid \mathbf{goto} \ l\\
+\mid \mathbf{havoc} \ l\ :\ T\mid \mathbf{assert} \ e\mid \mathbf{assume} \ e\\
+\mid x:=\mathbf{post} \ \mathbf{function} @\mathbf{Id} \ ( l\ :\ T)\\
+\mid \mathbf{return} \ e\mid \mathbf{throw} \mid \mathbf{selfdestruct}
+\end{array}
+$$
