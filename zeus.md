@@ -277,3 +277,12 @@ contract AttackWallet {
 
   - Two similar variables, `payoutCursor_Id` and `payoutCursor_Id_`
   - The deposits of all investors go to the 0th participant, possibly the person who created the contract
+
+---
+# ZEUS
+ - Takes as input a smart contract and a policy against which the smart contract must be verified
+ - Performs static analysis atop the smart contract code 
+ - Inserts the policy predicates as asserts
+ - Converts the smart contract embedded with policy assertions to LLVM bitcode
+ - Invokes its verifier to determine assertion violations
+--- 
