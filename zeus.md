@@ -1,0 +1,226 @@
+---
+marp: true
+title: Linking
+theme: default
+# class: invert
+paginate: true
+author: Christian Bale
+math: mathjax
+style: |
+  .columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+  .big-title {
+    font-size: 2.63rem;
+  }
+  .lll-title {
+    font-size: 1.5rem;
+  }
+
+# Created by Tommy on 15.01.2023
+
+---
+
+<h1 class="big-title">Zeus: Analyzing Safety of Smart Contracts</h1>
+
+#### Sukrit Kalra, Seep Goel, Mohan Dhawan and Subodh Sharma
+:zap: :zap: :zap:
+
+Tommy and Idan
+
+---
+
+# Introduction
+
+- Smart contracts are programs that run on the blockchain
+- They are written in high-level languages such as Solidity
+- Faithful execution of a smart contract is enforced by the blockchain’s consensus protocol
+- Correctness and fairness of the smart contracts is not enforced by the blockchain, and should be verified by the developer
+
+---
+
+# Correctness and Fairness
+
+- Correctness means the code is accurate and complete, producing intended results without errors
+- Fairness means the code adheres to the agreed upon higher-level business logic for interaction.
+The code shouldn't be biased towards any party, and shouldn't allow any party to cheat
+
+---
+
+# Correctness and Fairness - Example
+
+```c
+while (Balance > (depositors[index].Amount * 115/100) && index<Total_Investors) {
+    if(depositors[index].Amount!=0)) {
+        payment = depositors[index].Amount * 115/100;
+        depositors[index].EtherAddress.send(payment);
+        Balance -= payment;
+        Total_Paid_Out += payment;
+        depositors[index].Amount=0; // Remove investor
+    } break;
+}
+```
+
+The contract offers a 15% payout to any investor.
+Sadly, the contract has both fairness and correctness issues.
+
+---
+
+# Correctness and Fairness - Example
+
+```c
+while (Balance > (depositors[index].Amount * 115/100) && index<Total_Investors) {
+    if(depositors[index].Amount!=0)) {
+        payment = depositors[index].Amount * 115/100;
+        depositors[index].EtherAddress.send(payment);
+        Balance -= payment;         // --------------------------
+        Total_Paid_Out += payment;  // POTENTIAL OVERFLOW! 😱😱😱
+        depositors[index].Amount=0; // --------------------------
+    } break;
+}
+```
+
+Correctness issue: The contract has a potential overflow in the `Total_Paid_Out` variable.
+
+---
+
+# Correctness and Fairness - Example
+
+```c
+while (Balance > (depositors[index].Amount * 115/100) && index<Total_Investors) {
+    if(depositors[index].Amount!=0)) {
+        payment = depositors[index].Amount * 115/100;
+        depositors[index].EtherAddress.send(payment);
+        Balance -= payment;
+        Total_Paid_Out += payment;
+        depositors[index].Amount=0;
+    } break;
+}
+```
+
+Fairness issue (1): `index` is never incremented within the loop, and so the payout is made to just one investor.
+
+---
+
+# Correctness and Fairness - Example
+
+```c
+while (Balance > (depositors[index].Amount * 115/100) && index<Total_Investors) {
+    if(depositors[index].Amount!=0)) {
+        payment = depositors[index].Amount * 115/100;
+        depositors[index].EtherAddress.send(payment);
+        Balance -= payment;
+        Total_Paid_Out += payment;
+        depositors[index].Amount=0;
+    } break; // <------------------------------------
+}
+```
+
+Fairness issue (2): The `break` statement is inside the `while` statement, and so the loop will always break after the first iteration.
+Meaning, only the first investor will get paid. (Prob. the owner)
+
+---
+
+# Incorrect Contracts - Reentrancy
+
+```js
+contract Wallet {
+    mapping(address => uint) private userBalances;
+    function withdrawBalance() {
+        uint amountToWithdraw = userBalances[msg.sender];
+        if (amountToWithdraw > 0) {
+            msg.sender.call(userBalances[msg.sender]);
+            userBalances[msg.sender] = 0;
+        }
+    }
+    // ...
+}
+```
+
+```js
+contract AttackerContract {
+    function () {
+        Wallet wallet;
+        wallet.withdrawBalance();
+    }
+}
+```
+
+---
+
+# Incorrect Contracts - Unchecked Send
+
+- Solidity allows only $2300$ gas upon a send call
+- Computation-heavy fallback functiono at the receiving contract will cause the invoking send to fail
+- Contracts not handling failed send calls correctly may result in the loss of Ether
+
+---
+
+# Incorrect Contracts - Unchecked Send
+
+```js
+if (gameHasEnded && !prizePaidOut) {
+    winner.send(1000); // Send a prize to the winner
+    prizePaidOut = True;
+}
+```
+
+The `send` call may fail, but `prizePaidOut` is set to `True` regardless.
+Meaning the prize will never be paid out. :cry:
+
+---
+
+# Incorrect Contracts - Failed Send
+
+- Best practices suggest executing a `throw` upon a failed `send`, in order to revert the transaction
+- However, this may put contracts in risk
+
+---
+
+# Incorrect Contracts - Failed Send
+
+```js
+for (uint i=0; i < investors.length; i++) {
+    if (investors[i].invested == min investment) {
+        payout = investors[i].payout;
+        if (!(investors[i].address.send(payout)))
+            throw;
+        investors[i] = newInvestor;
+    }
+}
+```
+
+- A DAO that pays dividends to its smallest investor when a new investor offers more money, and the smallest is replaced
+- A wallet with a fallback function that takes more than $2300$ gas to run can invest enough to become the smallest investor
+- No new investors will be able to join the DAO
+
+---
+
+# Incorrect Contracts - Overflow/underflow
+
+```js
+uint payout = balance/participants.length;
+for (var i = 0; i < participants.length; i++)
+    participants[i].send(payout);
+```
+
+- `i` is of type `uint8`, and so it will overflow after $255$ iterations
+- Attacker can fill up the first $255$ slots in the array, and gain payouts at the expense of other investors
+
+---
+
+<h1 class="lll-title">Incorrect Contracts - Transaction State Dependence</h1>
+
+```js
+
+checkedSend = true
+
+//...
+if (gameHasEnded && !prizePaidOut) {
+    checkedSend = winner.send(1000); // Send a prize to the winner
+    assert(checkSend == true)
+    prizePaidOut = True;
+}
+```
