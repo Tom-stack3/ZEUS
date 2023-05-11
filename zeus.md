@@ -224,3 +224,16 @@ if (gameHasEnded && !prizePaidOut) {
     prizePaidOut = True;
 }
 ```
+
+---
+# Unfair Contracts - Incorrect Logic
+```js
+ while (balance > persons[payoutCursor_Id_].deposit / 100 * 115) {
+    payout = persons[payoutCursor_Id_].deposit / 100 * 115;
+    persons[payoutCursor_Id].EtherAddress.send(payout);
+    balance -= payout;
+    payoutCursor_Id_ ++;
+}
+```
+  - Two similar variables, `payoutCursor_Id` and `payoutCursor_Id_`.
+  - The deposits of all investors go to the 0th participant, possibly the person who created the contract.
