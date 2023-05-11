@@ -426,7 +426,7 @@ S::=( l\ :\ T@Id)^{*} \ \mid l:=e\mid S;S\\
 \textcolor[rgb]{0.81,0.81,0.81}{\mid \mathbf{return} \ e\mid \mathbf{throw} \mid \mathbf{selfdestruct}}
 \end{array}
 $$
-
+ - goto: Internal and external invocations or are inlined
 ---
 
 # An abstract language modeling Solidity
@@ -443,7 +443,7 @@ S::=( l\ :\ T@Id)^{*} \ \mid l:=e\mid S;S\\
 \textcolor[rgb]{0.81,0.81,0.81}{\mid \mathbf{return} \ e\mid \mathbf{throw} \mid \mathbf{selfdestruct}}
 \end{array}
 $$
-
+ 
 ---
 
 # An abstract language modeling Solidity
