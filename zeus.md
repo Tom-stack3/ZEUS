@@ -403,11 +403,79 @@ $$
 \textcolor[rgb]{0.81,0.81,0.81}{C::=\mathbf{contract} \ @Id\{\ \mathbf{global} \ v\ :\ T;\ \mathbf{function} @Id( l\ :\ T) \ \{S\})^{*}\}}\\
 S::=( l\ :\ T@Id)^{*} \ \mid l:=e\mid S;S\\
 \mid \mathbf{if} \ e\ \mathbf{then} \ S\ else\ S\\
+\textcolor[rgb]{0.81,0.81,0.81}{\mid \mathbf{goto} \ l}\\
+\textcolor[rgb]{0.81,0.81,0.81}{\mid \mathbf{havoc} \ l\ :\ T\mid \mathbf{assert} \ e\mid \mathbf{assume} \ e}\\
+\textcolor[rgb]{0.81,0.81,0.81}{\mid x:=\mathbf{post} \ \mathbf{function} @\mathbf{Id} \ ( l\ :\ T)}\\
+\textcolor[rgb]{0.81,0.81,0.81}{\mid \mathbf{return} \ e\mid \mathbf{throw} \mid \mathbf{selfdestruct}}
+\end{array}
+$$
+
+---
+
+# An abstract language modeling Solidity
+
+$$
+\begin{array}{l}
+\textcolor[rgb]{0.81,0.81,0.81}{P\ ::=\ C^{*}}\\
+\textcolor[rgb]{0.81,0.81,0.81}{C::=\mathbf{contract} \ @Id\{\ \mathbf{global} \ v\ :\ T;\ \mathbf{function} @Id( l\ :\ T) \ \{S\})^{*}\}}\\
+S::=( l\ :\ T@Id)^{*} \ \mid l:=e\mid S;S\\
+\textcolor[rgb]{0.81,0.81,0.81}{\mid \mathbf{if} \ e\ \mathbf{then} \ S\ else\ S}\\
 \mid \mathbf{goto} \ l\\
-\mid \mathbf{havoc} \ l\ :\ T\mid \mathbf{assert} \ e\mid \mathbf{assume} \ e\\
+\textcolor[rgb]{0.81,0.81,0.81}{\mid \mathbf{havoc} \ l\ :\ T\mid \mathbf{assert} \ e\mid \mathbf{assume} \ e}\\
+\textcolor[rgb]{0.81,0.81,0.81}{\mid x:=\mathbf{post} \ \mathbf{function} @\mathbf{Id} \ ( l\ :\ T)}\\
+\textcolor[rgb]{0.81,0.81,0.81}{\mid \mathbf{return} \ e\mid \mathbf{throw} \mid \mathbf{selfdestruct}}
+\end{array}
+$$
+
+---
+
+# An abstract language modeling Solidity
+
+$$
+\begin{array}{l}
+\textcolor[rgb]{0.81,0.81,0.81}{P\ ::=\ C^{*}}\\
+\textcolor[rgb]{0.81,0.81,0.81}{C::=\mathbf{contract} \ @Id\{\ \mathbf{global} \ v\ :\ T;\ \mathbf{function} @Id( l\ :\ T) \ \{S\})^{*}\}}\\
+S::=( l\ :\ T@Id)^{*} \ \mid l:=e\mid S;S\\
+\textcolor[rgb]{0.81,0.81,0.81}{\mid \mathbf{if} \ e\ \mathbf{then} \ S\ else\ S}\\
+\textcolor[rgb]{0.81,0.81,0.81}{\mid \mathbf{goto} \ l}\\
+{\mid \mathbf{havoc} \ l\ :\ T\mid \mathbf{assert} \ e\mid \mathbf{assume} \ e}\\
+\textcolor[rgb]{0.81,0.81,0.81}{\mid x:=\mathbf{post} \ \mathbf{function} @\mathbf{Id} \ ( l\ :\ T)}\\
+\textcolor[rgb]{0.81,0.81,0.81}{\mid \mathbf{return} \ e\mid \mathbf{throw} \mid \mathbf{selfdestruct}}
+\end{array}
+$$
+
+---
+
+# An abstract language modeling Solidity
+
+$$
+\begin{array}{l}
+\textcolor[rgb]{0.81,0.81,0.81}{P\ ::=\ C^{*}}\\
+\textcolor[rgb]{0.81,0.81,0.81}{C::=\mathbf{contract} \ @Id\{\ \mathbf{global} \ v\ :\ T;\ \mathbf{function} @Id( l\ :\ T) \ \{S\})^{*}\}}\\
+S::=( l\ :\ T@Id)^{*} \ \mid l:=e\mid S;S\\
+\textcolor[rgb]{0.81,0.81,0.81}{\mid \mathbf{if} \ e\ \mathbf{then} \ S\ else\ S}\\
+\textcolor[rgb]{0.81,0.81,0.81}{\mid \mathbf{goto} \ l}\\
+\textcolor[rgb]{0.81,0.81,0.81}{{\mid \mathbf{havoc} \ l\ :\ T\mid \mathbf{assert} \ e\mid \mathbf{assume} \ e}}\\
 \mid x:=\mathbf{post} \ \mathbf{function} @\mathbf{Id} \ ( l\ :\ T)\\
+\textcolor[rgb]{0.81,0.81,0.81}{\mid \mathbf{return} \ e\mid \mathbf{throw} \mid \mathbf{selfdestruct}}
+\end{array}
+$$
+
+---
+
+# An abstract language modeling Solidity
+
+$$
+\begin{array}{l}
+\textcolor[rgb]{0.81,0.81,0.81}{P\ ::=\ C^{*}}\\
+\textcolor[rgb]{0.81,0.81,0.81}{C::=\mathbf{contract} \ @Id\{\ \mathbf{global} \ v\ :\ T;\ \mathbf{function} @Id( l\ :\ T) \ \{S\})^{*}\}}\\
+S::=( l\ :\ T@Id)^{*} \ \mid l:=e\mid S;S\\
+\textcolor[rgb]{0.81,0.81,0.81}{\mid \mathbf{if} \ e\ \mathbf{then} \ S\ else\ S}\\
+\textcolor[rgb]{0.81,0.81,0.81}{\mid \mathbf{goto} \ l}\\
+\textcolor[rgb]{0.81,0.81,0.81}{\mid \mathbf{havoc} \ l\ :\ T\mid \mathbf{assert} \ e\mid \mathbf{assume} \ e}\\
+\textcolor[rgb]{0.81,0.81,0.81}{\mid x:=\mathbf{post} \ \mathbf{function} @\mathbf{Id} \ ( l\ :\ T)}\\
 \mid \mathbf{return} \ e\mid \mathbf{throw} \mid \mathbf{selfdestruct}
 \end{array}
 $$
 
-
+---
