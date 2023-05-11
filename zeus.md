@@ -285,4 +285,13 @@ contract AttackWallet {
  - Inserts the policy predicates as asserts
  - Converts the smart contract embedded with policy assertions to LLVM bitcode
  - Invokes its verifier to determine assertion violations
---- 
+---
+# Formalizing Solidity Semantics
+- Abstract language that captures relevant constructs of Solidity programs
+- A program consists of a sequence of contract declarations.
+- Each contract is abstractly viewed as a sequence of one or more method
+definitions
+
+---
+# An abstract language modeling Solidity
+![An abstract language modeling Solidity](./pictures/abstract_language.png)
