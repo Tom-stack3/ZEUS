@@ -19,7 +19,7 @@ style: |
     font-size: 1.5rem;
   }
 
-# Created by Tommy on 15.01.2023
+# Created by Tommy and Idan on 11.05.2023
 
 ---
 
@@ -338,7 +338,7 @@ definitions
 
 ---
 
-# An abstract language modeling Solidity
+# An Abstract Language modeling Solidity
 
 $$
 \begin{array}{l}
@@ -355,7 +355,7 @@ $$
 
 ---
 
-# An abstract language modeling Solidity
+# An Abstract Language modeling Solidity
 
 $$
 \begin{array}{l}
@@ -375,7 +375,7 @@ $$
 
 ---
 
-# An abstract language modeling Solidity
+# An Abstract Language modeling Solidity
 
 $$
 \begin{array}{l}
@@ -395,7 +395,7 @@ $$
 
 ---
 
-# An abstract language modeling Solidity
+# An Abstract Language modeling Solidity
 
 $$
 \begin{array}{l}
@@ -412,7 +412,7 @@ $$
 
 ---
 
-# An abstract language modeling Solidity
+# An Abstract Language modeling Solidity
 
 $$
 \begin{array}{l}
@@ -429,7 +429,7 @@ $$
 
 ---
 
-# An abstract language modeling Solidity
+# An Abstract Language modeling Solidity
 
 $$
 \begin{array}{l}
@@ -446,7 +446,7 @@ $$
 
 ---
 
-# An abstract language modeling Solidity
+# An Abstract Language modeling Solidity
 
 $$
 \begin{array}{l}
@@ -465,7 +465,7 @@ $$
 
 ---
 
-# An abstract language modeling Solidity
+# An Abstract Language modeling Solidity
 
 $$
 \begin{array}{l}
@@ -482,7 +482,7 @@ $$
  - Internal and external invocations or are inlined
 ---
 
-# An abstract language modeling Solidity
+# An Abstract Language modeling Solidity
 
 $$
 \begin{array}{l}
@@ -499,7 +499,7 @@ $$
  
 ---
 
-# An abstract language modeling Solidity
+# An Abstract Language modeling Solidity
 
 $$
 \begin{array}{l}
@@ -516,7 +516,7 @@ $$
  
 ---
 
-# An abstract language modeling Solidity
+# An Abstract Language modeling Solidity
 
 $$
 \begin{array}{l}
@@ -533,7 +533,7 @@ $$
  
 ---
 
-# An abstract language modeling Solidity
+# An Abstract Language modeling Solidity
 
 $$
 \begin{array}{l}
@@ -550,7 +550,7 @@ $$
 
 ---
 
-# An abstract language modeling Solidity
+# An Abstract Language modeling Solidity
 
 $$
 \begin{array}{l}
@@ -567,7 +567,7 @@ $$
 
 ---
 
-# An abstract language modeling Solidity
+# An Abstract Language modeling Solidity
 
 $$
 \begin{array}{l}
@@ -584,7 +584,7 @@ $$
 
 ---
 
-# An abstract language modeling Solidity
+# An Abstract Language modeling Solidity
 
 $$
 \begin{array}{l}
