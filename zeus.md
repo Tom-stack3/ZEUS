@@ -604,23 +604,32 @@ $$
 ---
 
 # Language Semantics
- - $\langle \langle \mathcal{T} ,\sigma \rangle ,\ BC\rangle$ - The blockchain state 
- - $\langle \mathcal{T} ,\sigma \rangle$ - The block B being currently mined
+$\langle \langle \mathcal{T} ,\sigma \rangle ,\ BC\rangle$ - The blockchain state 
+ - $\langle \mathcal{T} ,\sigma \rangle$ - The block $B$ being currently mined
  - $\mathcal{T}$ - The completed transactions that are not committed
  -  $\sigma$ - The global state of the system after executing $\mathcal{T}$
  - $BC$ - The list of commited blocks
- - $\sigma: id \to g, g\in Vals$
-    - $id$ - Identifier of the contract
-    - $g$ - Valuation of global variable
+
+<br/>
+
+ $\sigma: id \to g \ , \ g\in Vals$
+ - $id$ - Identifier of the contract
+ - $g$ - Valuation of global variable
+
 ---
+
 # Language Semantics
- - $\gamma$ -  A transaction defined as a stack of frames $f$
- - $f:=\langle\ell,id,M,pc,v\rangle$ - A frame
-     - $\ell \in Vals$ - The valuation of the method local variables $l$
-     - $M$ - The code of the contract with identifier id
-     - $pc$ - The program counter
-     - $v:\langle i,o \rangle$ - Auxiliary memory for storing input and output
+ $\gamma$ -  A transaction defined as a stack of frames $f$
+
+ 
+ $f:=\langle\ell,id,M,pc,v\rangle$ - A frame
+- $\ell \in Vals$ - The valuation of the method local variables $l$
+- $M$ - The code of the contract with identifier id
+- $pc$ - The program counter
+- $v:\langle i,o \rangle$ - Auxiliary memory for storing input and output
+
 --- 
+
 # Language Semantics
  - $c:=\langle \gamma, \sigma \rangle$ - The configuration, captures the state of the transaction
   - $\rightsquigarrow$ - Small step operation
