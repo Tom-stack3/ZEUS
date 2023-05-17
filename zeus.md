@@ -621,7 +621,7 @@ $\langle \langle \mathcal{T} ,\sigma \rangle ,\ BC\rangle$ - The blockchain stat
 # Language Semantics
  $\gamma$ -  A transaction defined as a stack of frames $f$
 
- 
+
  $f:=\langle\ell,id,M,pc,v\rangle$ - A frame
 - $\ell \in Vals$ - The valuation of the method local variables $l$
 - $M$ - The code of the contract with identifier id
@@ -717,4 +717,5 @@ $\langle \langle \mathcal{T} ,\sigma \rangle ,\ BC\rangle$ - The blockchain stat
 
 # Zeus Workflow
 
+<!-- $ d2 --theme 3 --sketch --pad=0 workflow.d2 img/workflow.png -->
 <img src="./img/workflow.png" width="100%">
