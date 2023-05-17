@@ -1,5 +1,6 @@
 
 # Workflow of ZEUS
+direction: right
 
 contract: Smart Contract (.sol) {shape: page}
 policy: Policy (XACML) {shape: page}
@@ -19,7 +20,8 @@ contract -> zeus.abstract_with_assertion
 
 zeus.abstract_with_assertion -> zeus.llvm_bitcode
 
-zeus.llvm_bitcode -> verifier : "Verification with external tool"
+# zeus.llvm_bitcode -> verifier : "Verification with external tool"
+zeus.llvm_bitcode -> verifier
 
 verifier -> Result
 
