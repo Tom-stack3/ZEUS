@@ -479,7 +479,7 @@ S::=\textcolor[rgb]{0.81,0.81,0.81}{( l\ :\ T@Id)^{*} \ \mid l:=e\mid S;S}\\
 \textcolor[rgb]{0.81,0.81,0.81}{\mid \mathbf{return} \ e\mid \mathbf{throw} \mid \mathbf{selfdestruct}}
 \end{array}
 $$
- - Internal and external invocations or are inlined
+ - goto a given line
 ---
 
 # An Abstract Language modeling Solidity
@@ -496,7 +496,8 @@ S::=\textcolor[rgb]{0.81,0.81,0.81}{( l\ :\ T@Id)^{*} \ \mid l:=e\mid S;S}\\
 \textcolor[rgb]{0.81,0.81,0.81}{\mid \mathbf{return} \ e\mid \mathbf{throw} \mid \mathbf{selfdestruct}}
 \end{array}
 $$
- 
+  - Asigns a non-deterministic value
+
 ---
 
 # An Abstract Language modeling Solidity
@@ -513,6 +514,7 @@ S::=\textcolor[rgb]{0.81,0.81,0.81}{( l\ :\ T@Id)^{*} \ \mid l:=e\mid S;S}\\
 \textcolor[rgb]{0.81,0.81,0.81}{\mid \mathbf{return} \ e\mid \mathbf{throw} \mid \mathbf{selfdestruct}}
 \end{array}
 $$
+ - Check of truth value of predicates
  
 ---
 
@@ -530,7 +532,7 @@ S::=\textcolor[rgb]{0.81,0.81,0.81}{( l\ :\ T@Id)^{*} \ \mid l:=e\mid S;S}\\
 \textcolor[rgb]{0.81,0.81,0.81}{\mid \mathbf{return} \ e\mid \mathbf{throw} \mid \mathbf{selfdestruct}}
 \end{array}
 $$
- 
+ - Blocks until the supplied expression becomes true
 ---
 
 # An Abstract Language modeling Solidity
@@ -547,7 +549,7 @@ S::=\textcolor[rgb]{0.81,0.81,0.81}{( l\ :\ T@Id)^{*} \ \mid l:=e\mid S;S}\\
 \textcolor[rgb]{0.81,0.81,0.81}{\mid \mathbf{return} \ e\mid \mathbf{throw} \mid \mathbf{selfdestruct}}
 \end{array}
 $$
-
+ - call() invocations (send with argument)
 ---
 
 # An Abstract Language modeling Solidity
@@ -598,6 +600,109 @@ S::=\textcolor[rgb]{0.81,0.81,0.81}{( l\ :\ T@Id)^{*} \ \mid l:=e\mid S;S}\\
 \textcolor[rgb]{0.81,0.81,0.81}{\mid \mathbf{return} \ e\mid \mathbf{throw} }\mid \mathbf{selfdestruct}
 \end{array}
 $$
+
+---
+
+# Language Semantics
+ - $\langle \langle \mathcal{T} ,\sigma \rangle ,\ BC\rangle$ - The blockchain state 
+ - $\langle \mathcal{T} ,\sigma \rangle$ - The block B being currently mined
+ - $\mathcal{T}$ - The completed transactions that are not committed
+ -  $\sigma$ - The global state of the system after executing $\mathcal{T}$
+ - $BC$ - The list of commited blocks
+ - $\sigma: id \to g, g\in Vals$
+    - $id$ - Identifier of the contract
+    - $g$ - Valuation of global variable
+---
+# Language Semantics
+ - $\gamma$ -  A transaction defined as a stack of frames $f$
+ - $f:=\langle\ell,id,M,pc,v\rangle$ - A frame
+     - $\ell \in Vals$ - The valuation of the method local variables $l$
+     - $M$ - The code of the contract with identifier id
+     - $pc$ - The program counter
+     - $v:\langle i,o \rangle$ - Auxiliary memory for storing input and output
+--- 
+# Language Semantics
+ - $c:=\langle \gamma, \sigma \rangle$ - The configuration, captures the state of the transaction
+  - $\rightsquigarrow$ - Small step operation
+  - $\to$ - Transaction relation for globals and blockchain state
+  - $\leftarrow$ - Assignment
+---
+# Language Semantics
+<div class='columns'>
+<div>
+<img src='./img/table1.png'>
+</div>
+<div>
+<img src='./img/table2.png'>
+</div>
+</div>
+
+---
+# Formalizing the Policy Language
+ - $PVars$ - The set of program variables
+ - $Func$ - The set of function names in a contract
+ - $Expr$ - The set of conditional expressions
+ ---
+# Formalizing the Policy Language
+  - **Policy specification**: $\langle Sub, Obj, Op, Cond, Res, \rangle$
+    - $Sub \in PVar$ - The set of source variables (one or more) that need to be tracked
+
+    - $Obj \in PVar$
+
+    - $Op:=\langle f,trig\rangle, f\in Func, trig\in \{pre, post\}$
+
+    - $Cond \in Expr$
+
+    - $Res \in \{ T, F\}$ 
+ ---
+ # Formalizing the Policy Language
+  - **Policy specification**: $\langle Sub, Obj, Op, Cond, Res, \rangle$
+    - $Sub \in PVar$
+
+    - $Obj \in PVar$ - The set of variables representing entities with which the subject interacts
+
+    - $Op:=\langle f,trig\rangle, f\in Func, trig\in \{pre, post\}$ 
+
+    - $Cond \in Expr$ 
+    - $Res \in \{ T, F\}$ 
+ ---
+  # Formalizing the Policy Language
+  - **Policy specification**: $\langle Sub, Obj, Op, Cond, Res, \rangle$
+    - $Sub \in PVar$
+    - $Obj \in PVar$
+
+    - $Op:=\langle f,trig\rangle, f\in Func, trig\in \{pre, post\}$ - The set of side-affecting invocations that capture the effects of interaction between the subject and the object
+
+
+    - $Cond \in Expr$
+
+    - $Res \in \{ T, F\}$
+
+ ---
+  # Formalizing the Policy Language
+  - **Policy specification**: $\langle Sub, Obj, Op, Cond, Res, \rangle$
+    - $Sub \in PVar$ 
+
+    - $Obj \in PVar$
+
+    - $Op:=\langle f,trig\rangle, f\in Func, trig\in \{pre, post\}$ 
+
+
+    - $Cond \in Expr$ - The set of predicates that govern this interaction leading to the operation
+
+    - $Res \in \{ T, F\}$
+
+ ---
+  # Formalizing the Policy Language
+  - **Policy specification**: $\langle Sub, Obj, Op, Cond, Res, \rangle$
+    - $Sub \in PVar$ 
+    - $Obj \in PVar$ 
+
+    - $Op:=\langle f,trig\rangle, f\in Func, trig\in \{pre, post\}$ 
+
+    - $Cond \in Expr$
+
+    - $Res \in \{ T, F\}$ - Indicates whether the interaction between the subject and operation as governed by the predicates is permitted or constitutes a violation
 
 ---
 
