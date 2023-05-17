@@ -603,4 +603,4 @@ $$
 
 # Zeus Workflow
 
-<img src="./workflow.png" width="100%">
+<img src="./img/workflow.png" width="100%">
