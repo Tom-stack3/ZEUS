@@ -600,7 +600,9 @@ S::=\textcolor[rgb]{0.81,0.81,0.81}{( l\ :\ T@Id)^{*} \ \mid l:=e\mid S;S}\\
 \textcolor[rgb]{0.81,0.81,0.81}{\mid \mathbf{return} \ e\mid \mathbf{throw} }\mid \mathbf{selfdestruct}
 \end{array}
 $$
+
 ---
+
 # Language Semantics
  - $\langle \langle \mathcal{T} ,\sigma \rangle ,\ BC\rangle$ - The blockchain state 
  - $\langle \mathcal{T} ,\sigma \rangle$ - The block B being currently mined
@@ -702,4 +704,8 @@ $$
 
     - $Res \in \{ T, F\}$ - Indicates whether the interaction between the subject and operation as governed by the predicates is permitted or constitutes a violation
 
- ---
+---
+
+# Zeus Workflow
+
+<img src="./img/workflow.png" width="100%">
