@@ -1,0 +1,25 @@
+
+# Workflow of ZEUS
+
+contract: Smart Contract (.sol) {shape: page}
+policy: Policy (XACML) {shape: page}
+# abstract: Abstract Program
+verifier: Verifier
+Result: Verification Result {shape: text}
+zeus: ZEUS
+
+zeus {
+    policy_builder: Policy Builder
+    abstract_with_assertion: Abstract Program with Asserts {shape: page}
+    llvm_bitcode: LLVM Code (\.ll) {shape: page}
+}
+policy -> zeus.policy_builder -> zeus.abstract_with_assertion
+
+contract -> zeus.abstract_with_assertion
+
+zeus.abstract_with_assertion -> zeus.llvm_bitcode
+
+zeus.llvm_bitcode -> verifier : "Verification with external tool"
+
+verifier -> Result
+
