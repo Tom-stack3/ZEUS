@@ -726,10 +726,90 @@ $\langle \langle \mathcal{T} ,\sigma \rangle ,\ BC\rangle$ - The blockchain stat
 - The Policy builder: $500$ lines of code
 - The translator from solidity to LLVM: $3000$ lines of code
 - The code was written on C++ using the Abstract Syntax Tree (AST) derived from the Solidity compiler `solc`
-- Verifier: Verifiers that are already work with LLVM like *SMACK*, *Seahorn*
+- Verifier: Verifiers that are already work with LLVM like `SMACK`, `Seahorn`
 
 ---
 
 # End-to-End Example
 
+<div class="columns">
+<div>
 
+```js
+function transfer() {
+    msg.sender.send(msg.value);
+    balance = balance - msg.value;
+}
+```
+
+```xml
+<Subject> msg.sender </Subject>
+<Object> msg.value </Object>
+<Operation trigger="pre"> send </Operation>
+<Condition> msg.value <= balance </Condition>
+<Result> True </Result>
+```
+
+</div>
+<div>
+
+```js
+havoc balance
+B@δ() {
+    assert(value <= balance)
+    post B'@δ()
+    balance = balance - value
+}
+```
+</div>
+</div>
+
+---
+
+# End-to-End Example
+
+```js
+define void @transfer() {
+entry:
+    % value = getelementptr %msgRecord* @msg, i32 0, i32 4
+    %0 = load i256* % value
+    %1 = load i256* @balance
+    %2 = icmp ule i256 %0, %1
+    br i1 %2, label %"75", label %"74"
+"74":
+    call void @ VERIFIER error()
+    br label %"75"
+"75":
+    % sender = getelementptr %msgRecord* @msg, i32 0, i32 2
+    %3 = load i160* % sender
+    %4 = call i1 @send(i160 %3, i256 %0)
+    %5 = sub i256 %1, %0
+    store i256 %5, i256* @balance
+    ret void
+}
+```
+
+---
+
+# End-to-End Example
+
+```js
+define void @transfer() {
+entry:
+    % value = getelementptr %msgRecord* @msg, i32 0, i32 4
+    %0 = load i256* % value     // Load msg.value into %0
+    %1 = load i256* @balance    // Load balance into %1
+    %2 = icmp ule i256 %0, %1   // Compare %0 and %1 (%2 = 1 if %0 <= %1)
+    br i1 %2, label %"75", label %"74"      // Branch based on %2
+"74": // If %2 is 0 (i.e., value > balance)
+    call void @ VERIFIER error()            // Report error
+    br label %"75"
+"75": // If %2 is 1 (i.e., value <= balance)
+    % sender = getelementptr %msgRecord* @msg, i32 0, i32 2
+    %3 = load i160* % sender
+    %4 = call i1 @send(i160 %3, i256 %0)    // Call send
+    %5 = sub i256 %1, %0                    // balance -= value
+    store i256 %5, i256* @balance           // Store updated balance
+    ret void
+}
+```
