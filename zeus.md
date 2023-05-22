@@ -813,3 +813,21 @@ entry:
     ret void
 }
 ```
+---
+
+# Limitations
+* Fairness properties involving mathematical formulae are harder to check
+    * ZEUS depends on the user to give appropriate policy
+* Zeus is not faithful exactly to Solidity syntax
+    * Does not explicitly account for runtime EVM parameters such as gas
+    * `throw` and `selfdestruct` are modeled as program exit
+* Zeus does not analyze contracts with an assembly block
+    * Only $45$ out of $22,493$ contracts in the data set use it
+* Zeus does not support virtual functions in contract hierarchy (i.e. `super`)
+    * Only $23$ out of $22,493$ contracts in the data set use it
+
+---
+# Evaluation
+ - $1524$ unique contracts (out of $22,493$ contracts)
+ - Contract Categories: DAO, Game, Token, Wallet, Misc
+ 
