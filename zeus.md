@@ -829,5 +829,18 @@ entry:
 ---
 # Evaluation
  - $1524$ unique contracts (out of $22,493$ contracts)
- - Contract Categories: DAO, Game, Token, Wallet, Misc
- 
+
+<style>
+table {
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+| Category | Contracts | Source | LLVM | Send/Call | Ext. Calls |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| DAO | 140 | 2.8 | 24.3 | 252 | 350 |
+| Game | 244 | 23.3 | 609.2 | 851 | 16 |
+| Token | 290 | 25.2 | 385.9 | 311 | 271 |
+| Wallet | 72 | 10.8 | 105.9 | 186 | 6 |
+| Misc | 778 | 47.6 | 924.3 | 1102 | 498 |
+| **Total** | **1524** | **109.7** | **2049.6** | **2702** | **1141** |
