@@ -719,3 +719,17 @@ $\langle \langle \mathcal{T} ,\sigma \rangle ,\ BC\rangle$ - The blockchain stat
 
 <!-- $ d2 --theme 3 --sketch --pad=0 workflow.d2 img/workflow.png -->
 <img src="./img/workflow.png" width="100%">
+
+---
+
+# Implementation
+- The Policy builder: $500$ lines of code
+- The translator from solidity to LLVM: $3000$ lines of code
+- The code was written on C++ using the Abstract Syntax Tree (AST) derived from the Solidity compiler `solc`
+- Verifier: Verifiers that are already work with LLVM like *SMACK*, *Seahorn*
+
+---
+
+# End-to-End Example
+
+
