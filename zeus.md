@@ -844,3 +844,17 @@ table {
 | Wallet | 72 | 10.8 | 105.9 | 186 | 6 |
 | Misc | 778 | 47.6 | 924.3 | 1102 | 498 |
 | **Total** | **1524** | **109.7** | **2049.6** | **2702** | **1141** |
+
+---
+# Zeus's Performance
+
+<img src='./img/graphs34.png'>
+
+---
+
+# Zeus's Performance
+<img src='./img/graphs12.png'>
+
+---
+
+# Thank you for listening! :zap: :zap:
