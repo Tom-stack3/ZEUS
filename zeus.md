@@ -150,6 +150,33 @@ contract AttackerContract {
 
 ---
 
+# Incorrect Contracts - Reentrancy
+
+```js
+contract Wallet {
+    mapping(address => uint) private userBalances;
+    function withdrawBalance() {
+        uint amountToWithdraw = userBalances[msg.sender];
+        if (amountToWithdraw > 0) {
+            userBalances[msg.sender] = 0; // Mitigated by swapping the lines
+            msg.sender.call(userBalances[msg.sender]);
+        }
+    }
+    // ...
+}
+```
+
+```js
+contract AttackerContract {
+    function () {
+        Wallet wallet;
+        wallet.withdrawBalance();
+    }
+}
+```
+
+---
+
 # Incorrect Contracts - Unchecked Send
 
 - Solidity allows only $2300$ gas upon a send call
