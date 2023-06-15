@@ -132,7 +132,7 @@ contract Wallet {
         uint amountToWithdraw = userBalances[msg.sender];
         if (amountToWithdraw > 0) {
             msg.sender.call(userBalances[msg.sender]);
-            userBalances[msg.sender] = 0;
+            userBalances[msg.sender] = 0;                                   
         }
     }
     // ...
