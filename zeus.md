@@ -989,6 +989,7 @@ if (gameHasEnded && !prizePaidOut) {
     * Only $23$ out of $22,493$ contracts in the data set use it
 
 ---
+
 # Evaluation
  - $1524$ unique contracts (out of $22,493$ contracts)
 
@@ -1008,6 +1009,7 @@ table {
 | **Total** | **1524** | **109.7** | **2049.6** | **2702** | **1141** |
 
 ---
+
 # Zeus's Performance
 
 <img src='./img/graphs34.png'>
