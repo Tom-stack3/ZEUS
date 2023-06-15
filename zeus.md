@@ -652,6 +652,40 @@ $\langle \langle \mathcal{T} ,\sigma \rangle ,\ BC\rangle$ - The blockchain stat
  - $Func$ - The set of function names in a contract
  - $Expr$ - The set of conditional expressions
  ---
+ # Policy Example
+<div class="columns">
+ <div>
+
+```xml
+<Subject> msg.sender </Subject>
+<Object> a.seller </Object>
+<Operation trigger="pre"> placeBid </Operation>
+<Condition> a.seller != msg.sender </Condition>
+<Result> True </Result>
+```
+</div>
+<div>
+
+```js
+function placeBid(uint auctionId){
+    Auction a = auctions[auctionId];
+    if (a.currentBid >= msg.value)
+        throw;
+    uint bidIdx = a.bids.length++;
+    Bid b = a.bids[bidIdx];
+    b.bidder = msg.sender;
+    b.amount = msg.value;
+    // ...
+    BidPlaced(auctionId, b.bidder, b.amount);
+    return true;
+}
+```
+</div>
+</div>
+
+
+ ---
+
 # Formalizing the Policy Language
   - **Policy specification**: $\langle Sub, Obj, Op, Cond, Res, \rangle$
     - $Sub \in PVar$ - The set of source variables (one or more) that need to be tracked
