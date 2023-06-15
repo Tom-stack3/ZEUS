@@ -843,6 +843,10 @@ entry:
 
 ---
 
+# Handling Correctness Bugs
+
+---
+
 # Handling Correctness Bugs - Reentrancy
 
 ```js
