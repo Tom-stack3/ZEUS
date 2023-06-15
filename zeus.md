@@ -840,6 +840,104 @@ entry:
     ret void
 }
 ```
+
+---
+
+# Handling Correctness Bugs - Reentrancy
+
+```js
+contract Wallet {
+    mapping(address => uint) private userBalances;
+    function withdrawBalance() {
+        uint amountToWithdraw = userBalances[msg.sender];
+        if (amountToWithdraw > 0) {
+            msg.sender.call(userBalances[msg.sender]);
+            userBalances[msg.sender] = 0;
+        }
+    }
+    // ...
+}
+```
+
+```js
+contract AttackerContract {
+    function () {
+        Wallet wallet;
+        wallet.withdrawBalance();
+    }
+}
+```
+
+---
+
+# Handling Correctness Bugs - Reentrancy
+
+```js
+contract Wallet {
+    mapping(address => uint) private userBalances;
+    function withdrawBalance() {
+        uint amountToWithdraw = userBalances[msg.sender];
+        if (amountToWithdraw > 0) {
+            msg.sender.call(userBalances[msg.sender]);
+            userBalances[msg.sender] = 0;
+        }
+    }
+    // ...
+}
+```
+
+---
+
+# Handling Correctness Bugs - Reentrancy
+
+```js
+contract Wallet {
+    mapping(address => uint) private userBalances;
+    function withdrawBalance2() {
+        uint amountToWithdraw = userBalances[msg.sender];
+        if (amountToWithdraw > 0) {
+            assert(false);
+            msg.sender.call(userBalances[msg.sender]);
+            userBalances[msg.sender] = 0;
+        }
+    }
+    function withdrawBalance() {
+        uint amountToWithdraw = userBalances[msg.sender];
+        if (amountToWithdraw > 0) {
+            withdrawBalance2();
+            msg.sender.call(userBalances[msg.sender]);
+            userBalances[msg.sender] = 0;
+        }
+    }
+}
+```
+
+---
+
+# Handling Correctness Bugs - Reentrancy
+
+```js
+contract Wallet {
+    mapping(address => uint) private userBalances;
+    function withdrawBalance2() {
+        uint amountToWithdraw = userBalances[msg.sender];
+        if (amountToWithdraw > 0) {
+            assert(false); // Now it's unreachable
+            msg.sender.call(userBalances[msg.sender]);
+            userBalances[msg.sender] = 0;
+        }
+    }
+    function withdrawBalance() {
+        uint amountToWithdraw = userBalances[msg.sender];
+        if (amountToWithdraw > 0) {
+            userBalances[msg.sender] = 0; // The safe version :)
+            withdrawBalance2();
+            msg.sender.call(userBalances[msg.sender]);
+        }
+    }
+}
+```
+
 ---
 
 # Limitations
