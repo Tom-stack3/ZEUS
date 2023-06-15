@@ -944,6 +944,39 @@ contract Wallet {
 
 ---
 
+# Handling Correctness Bugs - Unchecked Send
+
+```js
+// Globals ...
+prizePaidOut = False;
+
+if (gameHasEnded && !prizePaidOut) {
+    winner.send(1000); // May fail, thus the Ether is lost forever :(
+    prizePaidOut = True;
+}
+```
+---
+
+# Handling Correctness Bugs - Unchecked Send
+
+```js
+// Globals ...
+prizePaidOut = False;
+checkSend = True;
+
+if (gameHasEnded && !prizePaidOut) {
+    checkSend &= winner.send(1000); // False if send fails
+    assert(checkSend);
+    prizePaidOut = True;
+}
+```
+
+- Initialize a global variable `checkSend` to `true`
+- Take logical AND of `checkSend` and the result of each `send`
+- For every write of a global variable, assert that `checkSend` is `true`
+
+---
+
 # Limitations
 * Fairness properties involving mathematical formulae are harder to check
     * ZEUS depends on the user to give appropriate policy
