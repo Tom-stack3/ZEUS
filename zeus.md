@@ -132,7 +132,34 @@ contract Wallet {
         uint amountToWithdraw = userBalances[msg.sender];
         if (amountToWithdraw > 0) {
             msg.sender.call(userBalances[msg.sender]);
-            userBalances[msg.sender] = 0;
+            userBalances[msg.sender] = 0;                                   
+        }
+    }
+    // ...
+}
+```
+
+```js
+contract AttackerContract {
+    function () {
+        Wallet wallet;
+        wallet.withdrawBalance();
+    }
+}
+```
+
+---
+
+# Incorrect Contracts - Reentrancy
+
+```js
+contract Wallet {
+    mapping(address => uint) private userBalances;
+    function withdrawBalance() {
+        uint amountToWithdraw = userBalances[msg.sender];
+        if (amountToWithdraw > 0) {
+            userBalances[msg.sender] = 0; // Mitigated by swapping the lines
+            msg.sender.call(userBalances[msg.sender]);
         }
     }
     // ...
@@ -847,6 +874,182 @@ entry:
     ret void
 }
 ```
+
+---
+
+# Handling Correctness Bugs
+
+---
+
+# Handling Correctness Bugs - Reentrancy
+
+```js
+contract Wallet {
+    mapping(address => uint) private userBalances;
+    function withdrawBalance() {
+        uint amountToWithdraw = userBalances[msg.sender];
+        if (amountToWithdraw > 0) {
+            msg.sender.call(userBalances[msg.sender]);
+            userBalances[msg.sender] = 0;
+        }
+    }
+    // ...
+}
+```
+
+```js
+contract AttackerContract {
+    function () {
+        Wallet wallet;
+        wallet.withdrawBalance();
+    }
+}
+```
+
+---
+
+# Handling Correctness Bugs - Reentrancy
+
+```js
+contract Wallet {
+    mapping(address => uint) private userBalances;
+    function withdrawBalance() {
+        uint amountToWithdraw = userBalances[msg.sender];
+        if (amountToWithdraw > 0) {
+            msg.sender.call(userBalances[msg.sender]);
+            userBalances[msg.sender] = 0;
+        }
+    }
+    // ...
+}
+```
+
+---
+
+# Handling Correctness Bugs - Reentrancy
+
+```js
+contract Wallet {
+    mapping(address => uint) private userBalances;
+    function withdrawBalance2() {
+        uint amountToWithdraw = userBalances[msg.sender];
+        if (amountToWithdraw > 0) {
+            assert(false);
+            msg.sender.call(userBalances[msg.sender]);
+            userBalances[msg.sender] = 0;
+        }
+    }
+    function withdrawBalance() {
+        uint amountToWithdraw = userBalances[msg.sender];
+        if (amountToWithdraw > 0) {
+            withdrawBalance2();
+            msg.sender.call(userBalances[msg.sender]);
+            userBalances[msg.sender] = 0;
+        }
+    }
+}
+```
+
+---
+
+# Handling Correctness Bugs - Reentrancy
+
+```js
+contract Wallet {
+    mapping(address => uint) private userBalances;
+    function withdrawBalance2() {
+        uint amountToWithdraw = userBalances[msg.sender];
+        if (amountToWithdraw > 0) {
+            assert(false); // Now it's unreachable
+            msg.sender.call(userBalances[msg.sender]);
+            userBalances[msg.sender] = 0;
+        }
+    }
+    function withdrawBalance() {
+        uint amountToWithdraw = userBalances[msg.sender];
+        if (amountToWithdraw > 0) {
+            userBalances[msg.sender] = 0; // The safe version :)
+            withdrawBalance2();
+            msg.sender.call(userBalances[msg.sender]);
+        }
+    }
+}
+```
+
+---
+
+# Handling Correctness Bugs - Unchecked Send
+
+```js
+// Globals ...
+prizePaidOut = False;
+
+if (gameHasEnded && !prizePaidOut) {
+    winner.send(1000); // May fail, thus the Ether is lost forever :(
+    prizePaidOut = True;
+}
+```
+---
+
+# Handling Correctness Bugs - Unchecked Send
+
+```js
+// Globals ...
+prizePaidOut = False;
+checkSend = True;
+
+if (gameHasEnded && !prizePaidOut) {
+    checkSend &= winner.send(1000); // False if send fails
+    assert(checkSend);
+    prizePaidOut = True;
+}
+```
+
+- Initialize a global variable `checkSend` to `true`
+- Take logical AND of `checkSend` and the result of each `send`
+- For every write of a global variable, assert that `checkSend` is `true`
+
+---
+
+# Handling Correctness Bugs - Failed Send
+
+```js
+// Globals ...
+investors = [ ... ];
+
+for (uint i=0; i < investors.length; i++) {
+    if (investors[i].invested == min investment) {
+        payout = investors[i].payout;
+        if (!(investors[i].address.send(payout)))
+            throw;
+        investors[i] = newInvestor;
+    }
+}
+```
+
+---
+
+# Handling Correctness Bugs - Failed Send
+
+```js
+// Globals ...
+investors = [ ... ];
+checkSend = True;
+
+for (uint i=0; i < investors.length; i++) {
+    if (investors[i].invested == min investment) {
+        payout = investors[i].payout;
+        if (!(checkSend &= investors[i].address.send(payout)))
+            assert(checkSend);
+            throw;
+        investors[i] = newInvestor;
+    }
+}
+```
+
+- Same as unchecked send, but assert that `checkSend` is `true` before `throw`'s
+- Indicates a possibility of reverting the transaction due to control flow reaching a `throw` on a failed `send`
+
 ---
 
 # Limitations
@@ -861,6 +1064,7 @@ entry:
     * Only $23$ out of $22,493$ contracts in the data set use it
 
 ---
+
 # Evaluation
  - $1524$ unique contracts (out of $22,493$ contracts)
 
@@ -880,6 +1084,7 @@ table {
 | **Total** | **1524** | **109.7** | **2049.6** | **2702** | **1141** |
 
 ---
+
 # Zeus's Performance
 
 <img src='./img/graphs34.png'>
