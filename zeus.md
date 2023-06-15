@@ -977,6 +977,47 @@ if (gameHasEnded && !prizePaidOut) {
 
 ---
 
+# Handling Correctness Bugs - Failed Send
+
+```js
+// Globals ...
+investors = [ ... ];
+
+for (uint i=0; i < investors.length; i++) {
+    if (investors[i].invested == min investment) {
+        payout = investors[i].payout;
+        if (!(investors[i].address.send(payout)))
+            throw;
+        investors[i] = newInvestor;
+    }
+}
+```
+
+---
+
+# Handling Correctness Bugs - Failed Send
+
+```js
+// Globals ...
+investors = [ ... ];
+checkSend = True;
+
+for (uint i=0; i < investors.length; i++) {
+    if (investors[i].invested == min investment) {
+        payout = investors[i].payout;
+        if (!(checkSend &= investors[i].address.send(payout)))
+            assert(checkSend);
+            throw;
+        investors[i] = newInvestor;
+    }
+}
+```
+
+- Same as unchecked send, but assert that `checkSend` is `true` before `throw`'s
+- Indicates a possibility of reverting the transaction due to control flow reaching a `throw` on a failed `send`
+
+---
+
 # Limitations
 * Fairness properties involving mathematical formulae are harder to check
     * ZEUS depends on the user to give appropriate policy
