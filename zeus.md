@@ -1084,7 +1084,10 @@ table {
 | **Total** | **1524** | **109.7** | **2049.6** | **2702** | **1141** |
 
 ---
+# Evaluation
+<img src='./img/evaluation.png'>
 
+---
 # Zeus's Performance
 
 <img src='./img/graphs34.png'>
@@ -1096,4 +1099,10 @@ table {
 
 ---
 
+# Conclusion
+ - 94.6% of 22.4K contracts are vulnerable
+- ZEUS is sound (zero false negative)
+- Low false positive rate
+- ZEUS is fast (less than 1 min to verify 97% of the contracts)
+---
 # Thank you for listening! :zap: :zap:
