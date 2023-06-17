@@ -858,6 +858,7 @@ define void @main() {
 entry:
     %0 = call i256 @ _VERIFIER_NONDET ( )
     store 1256 %0, 1256* @balance
+    //...
 }
 ```
 
@@ -889,6 +890,7 @@ define void @main() {
 entry: // Globals are automatically havoc-ed to explore the entire data domain
     %0 = call i256 @ _VERIFIER_NONDET ( )
     store 1256 %0, 1256* @balance
+    // ...
 }
 ```
 
