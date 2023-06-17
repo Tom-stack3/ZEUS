@@ -680,11 +680,7 @@ $\langle \langle \mathcal{T} ,\sigma \rangle ,\ BC\rangle$ - The blockchain stat
 </div>
 
 ---
-# Formalizing the Policy Language
- - $PVars$ - The set of program variables
- - $Func$ - The set of function names in a contract
- - $Expr$ - The set of conditional expressions
- ---
+
  # Policy Example
 <div class="columns">
  <div>
@@ -717,6 +713,11 @@ function placeBid(uint auctionId){
 </div>
 
 
+ ---
+ # Formalizing the Policy Language
+ - $PVars$ - The set of program variables
+ - $Func$ - The set of function names in a contract
+ - $Expr$ - The set of conditional expressions
  ---
 
 # Formalizing the Policy Language
