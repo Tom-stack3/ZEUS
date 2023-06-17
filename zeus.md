@@ -43,9 +43,9 @@ Tommy and Idan
 
 # Correctness and Fairness
 
-- Correctness means the code is accurate and complete, producing intended results without errors
-- Fairness means the code adheres to the agreed upon higher-level business logic for interaction.
-The code shouldn't be biased towards any party, and shouldn't allow any party to cheat
+- Correctness means the code is accurate and complete, producing intended results without errors and bugs
+- Fairness means the code adheres to the agreed upon higher-level business logic for interaction
+  The code shouldn't be biased towards any party, and shouldn't allow any party to cheat
 
 ---
 
@@ -281,14 +281,8 @@ contract UserWallet {
 }
 ```
 
-```js
-contract AttackWallet {
-    function() {
-        UserWallet w = UserWallet(userWalletAddr);
-        w.transfer(thiefStorageAddr, msg.sender.balance);
-    }
-}
-```
+- `tx.origin` is the address of the original initiator of the call chain
+- `msg.sender` is the address of the caller of the current function
 
 ---
 
