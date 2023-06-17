@@ -417,9 +417,9 @@ C::=\mathbf{contract} \ @Id\{\ \mathbf{global} \ v\ :\ T;\ \mathbf{function} @Id
 \end{array}
 $$
 
- - Each contract is abstractly viewed as a sequence of one or more method definitions.
- - Persistent storage private to a contract, denoted by the keyword global
-
+ - Each contract is abstractly viewed as a sequence of one or more method definitions
+ - Storage private to a contract, denoted by the keyword global
+ - Since T is generic, we lose no generality with a single variable
 ---
 
 # An Abstract Language modeling Solidity
