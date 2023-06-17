@@ -281,14 +281,8 @@ contract UserWallet {
 }
 ```
 
-```js
-contract AttackWallet {
-    function() {
-        UserWallet w = UserWallet(userWalletAddr);
-        w.transfer(thiefStorageAddr, msg.sender.balance);
-    }
-}
-```
+- `tx.origin` is the address of the original initiator of the call chain
+- `msg.sender` is the address of the caller of the current function
 
 ---
 
