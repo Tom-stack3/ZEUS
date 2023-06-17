@@ -357,6 +357,12 @@ function placeBid(uint auctionId){
  - Invokes its verifier to determine assertion violations
 
 ---
+# Zeus Workflow
+
+<!-- $ d2 --theme 3 --sketch --pad=0 workflow.d2 img/workflow.png -->
+<img src="./img/workflow.png" width="100%">
+
+---
 # Formalizing Solidity Semantics
 - Abstract language that captures relevant constructs of Solidity programs
 - A program consists of a sequence of contract declarations.
@@ -775,11 +781,15 @@ function placeBid(uint auctionId){
     - $Res \in \{ T, F\}$ - Indicates whether the interaction between the subject and operation as governed by the predicates is permitted or constitutes a violation
 
 ---
-
-# Zeus Workflow
-
-<!-- $ d2 --theme 3 --sketch --pad=0 workflow.d2 img/workflow.png -->
-<img src="./img/workflow.png" width="100%">
+# Translation To LLVM
+<div class="columns">
+<div>
+<img src="./img/LLVM1.png">
+</div>
+<div>
+<img src="./img/LLVM2.png">
+</div>
+</div>
 
 ---
 
