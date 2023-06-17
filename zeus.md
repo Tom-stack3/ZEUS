@@ -1065,7 +1065,7 @@ for (uint i=0; i < investors.length; i++) {
 
 ---
 
-# Evaluation
+<!-- # Evaluation
  - $1524$ unique contracts (out of $22,493$ contracts)
 
 <style>
@@ -1083,7 +1083,7 @@ table {
 | Misc | 778 | 47.6 | 924.3 | 1102 | 498 |
 | **Total** | **1524** | **109.7** | **2049.6** | **2702** | **1141** |
 
----
+--- -->
 # Evaluation
 <img src='./img/evaluation.png'>
 
