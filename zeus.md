@@ -826,6 +826,7 @@ function transfer() {
 <div>
 
 ```js
+havoc value
 havoc balance
 B@δ() {
     assert(value <= balance)
@@ -859,6 +860,11 @@ entry:
     store i256 %5, i256* @balance
     ret void
 }
+define void @main() {
+entry:
+    %0 = call i256 @ _VERIFIER_NONDET ( )
+    store 1256 %0, 1256* @balance
+}
 ```
 
 ---
@@ -873,8 +879,9 @@ entry:
     %1 = load i256* @balance    // Load balance into %1
     %2 = icmp ule i256 %0, %1   // Compare %0 and %1 (%2 = 1 if %0 <= %1)
     br i1 %2, label %"75", label %"74"      // Branch based on %2
-"74": // If %2 is 0 (i.e., value > balance)
-    call void @ VERIFIER error()            // Report error
+"74": // An assert failure is modeled as a call to the verifier’s error function
+    call void @ VERIFIER error()        
+function
     br label %"75"
 "75": // If %2 is 1 (i.e., value <= balance)
     % sender = getelementptr %msgRecord* @msg, i32 0, i32 2
@@ -883,6 +890,11 @@ entry:
     %5 = sub i256 %1, %0                    // balance -= value
     store i256 %5, i256* @balance           // Store updated balance
     ret void
+}
+define void @main() {
+entry: // Globals are automatically havoc-ed to explore the entire data domain
+    %0 = call i256 @ _VERIFIER_NONDET ( )
+    store 1256 %0, 1256* @balance
 }
 ```
 
