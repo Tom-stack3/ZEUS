@@ -523,7 +523,7 @@ S::=\textcolor[rgb]{0.81,0.81,0.81}{( l\ :\ T@Id)^{*} \ \mid l:=e\mid S;S}\\
 \textcolor[rgb]{0.81,0.81,0.81}{\mid \mathbf{return} \ e\mid \mathbf{throw} \mid \mathbf{selfdestruct}}
 \end{array}
 $$
-  - Asigns a non-deterministic value
+  - Assigns a non-deterministic value
 
 ---
 
