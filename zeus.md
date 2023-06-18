@@ -180,7 +180,7 @@ contract AttackerContract {
 # Incorrect Contracts - Unchecked Send
 
 - Solidity allows only $2300$ gas upon a send call
-- Computation-heavy fallback functiono at the receiving contract will cause the invoking send to fail
+- Computation-heavy fallback function at the receiving contract will cause the invoking send to fail
 - Contracts not handling failed send calls correctly may result in the loss of Ether
 
 ---
@@ -1008,6 +1008,23 @@ if (gameHasEnded && !prizePaidOut) {
     prizePaidOut = True;
 }
 ```
+
+---
+
+# Handling Correctness Bugs - Unchecked Send
+
+```js
+// Globals ...
+prizePaidOut = False;
+checkSend = True;
+
+if (gameHasEnded && !prizePaidOut) {
+    checkSend &= winner.send(1000); // False if send fails
+    assert(checkSend);
+    prizePaidOut = True;
+}
+```
+
 ---
 
 # Handling Correctness Bugs - Unchecked Send
