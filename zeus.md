@@ -1108,13 +1108,13 @@ table {
 
 ---
 # Zeus's Performance
-
-<img src='./img/graphs34.png'>
-
----
-
-# Zeus's Performance
-<img src='./img/graphs12.png'>
+<div class="columns">
+<div>
+<img src='./img/graph1.png'>
+</div>
+<img src='./img/graph2.png'>
+</div>
+</div>
 
 ---
 
