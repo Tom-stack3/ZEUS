@@ -809,8 +809,8 @@ function transfer() {
 ```
 
 ```xml
-<Subject> msg.sender </Subject>
-<Object> msg.value </Object>
+<Subject> msg.value </Subject>
+<Object> msg.sender </Object>
 <Operation trigger="pre"> send </Operation>
 <Condition> msg.value <= balance </Condition>
 <Result> True </Result>
